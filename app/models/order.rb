@@ -62,4 +62,10 @@ class Order < ApplicationRecord
     end
     update_attribute(:total, sum)
   end
+
+  #from Carts Controller
+  def self.get_order_total(id)
+    find(id).total
+  end
+
 end
