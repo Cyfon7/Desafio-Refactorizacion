@@ -63,6 +63,15 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 gem "devise", "~> 4.6"
 
-gem "bootstrap", "~> 4.3"
+gem "bootstrap"#, "~> 4.3"
 
 gem "activemerchant", "~> 1.95"
+
+gem 'rails-erd', group: :development
+
+group :development, :test do
+  gem 'rspec-rails', '~> 5.0.0'
+end
+
+gem 'jquery-rails'
+gem "cocoon"

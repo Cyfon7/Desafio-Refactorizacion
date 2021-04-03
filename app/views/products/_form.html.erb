@@ -22,29 +22,42 @@
   </div>
 
   <div class="field">
-    <%= form.label :stock %>
-    <%= form.number_field :stock %>
-  </div>
-
-  <div class="field">
     <%= form.label :price %>
     <%= form.text_field :price %>
   </div>
 
   <div class="field">
-    <%= form.label :sku %>
-    <%= form.text_field :sku %>
-  </div>
-  <div class="field">
     <%= form.label :categories %>
-        <%= form.collection_check_boxes(:category_ids,
-                                        Category.all,
-                                        :id,
-                                        :name) do |b| %>
-        <%= b.label class:"label-checkbox" do%>
-            <%=b.check_box + b.text%>
-        <%end%>
-    <% end %>
+
+    <table>
+      <% Category.where(category_id: nil).each do |catalog| %>
+        <tr>
+          <th><%= catalog.name %></th>
+          <td>
+            <%= form.collection_check_boxes(:category_ids, Category.where(category_id: catalog.id), :id, :name) do |b| %>
+              <%= b.label class:"label-checkbox" do %>
+                <%=b.check_box + b.text%>
+              <% end %>    
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+
+  <%= link_to 'Create Variation', new_variation_path %>
+
+  <div class="field">
+    <div id="product_variations">
+      <%= form.fields_for :product_variations do |variation| %>
+        <%= render "product_variations_fields", f: variation %>
+      <% end %>
+    </div>
+    <div class="links">
+      <%= link_to_add_association form, :product_variations, partial: 'products/product_variations_fields' do %>
+        <span class="pl-1"><i class="fas fa-plus-square fa-2x"></i> Add Variation </span>
+      <% end %>
+    </div>
   </div>
 
   <div class="actions">
